@@ -1,0 +1,12 @@
+/build*/
+/.cache/
+/.vs/
+/.idea/
+*.exe
+*.obj
+*.o
+*.pdb
+*.ilk
+*.user
+*.zip
+
