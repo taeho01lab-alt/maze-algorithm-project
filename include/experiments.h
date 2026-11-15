@@ -14,7 +14,7 @@ struct ExperimentConfig {
     int repeats = 1;
 };
 
-// Member 3: runner/CSV. Member 4: generation timing and metrics.
+// Comparison-results owner: runner, generation timing, metrics and CSV.
 void runExperiments(const ExperimentConfig& config,
                     const std::filesystem::path& csvPath);
 
