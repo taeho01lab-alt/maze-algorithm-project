@@ -24,5 +24,12 @@ if(BUILD_TESTING)
     target_link_libraries(maze_core_tests PRIVATE maze_core)
     add_test(NAME common_maze_contract COMMAND maze_core_tests)
     add_test(NAME cli_help COMMAND maze_app --help)
+    add_executable(maze_generator_tests tests/test_generators.cpp)
+    target_link_libraries(maze_generator_tests PRIVATE maze_core)
+    add_test(NAME maze_generators COMMAND maze_generator_tests)
+    add_test(NAME cli_generation COMMAND ${CMAKE_COMMAND}
+        "-DAPP=$<TARGET_FILE:maze_app>"
+        "-DTEST_DIR=${CMAKE_CURRENT_BINARY_DIR}/cli-test-output"
+        -P "${CMAKE_CURRENT_SOURCE_DIR}/tests/test_cli.cmake")
 endif()
 
