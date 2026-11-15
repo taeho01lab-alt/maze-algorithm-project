@@ -28,12 +28,15 @@ int parseSize(std::string_view text) {
 int main(int argc, char** argv) {
     try {
         if (argc == 2 && std::string_view(argv[1]) == "--help") {
-            std::cout << "Usage: maze_app <A|B|C> <width> <height> <seed> [output.txt]\n"
-                         "Algorithms A/B/C are placeholders until the team implements them.\n";
+            std::cout << "Usage: maze_app <A|B|C|dfs|kruskal|sidewinder> <width> <height> <seed> [output.txt]\n"
+                         "A/dfs: Randomized DFS\n"
+                         "B/kruskal: Randomized Kruskal\n"
+                         "C/sidewinder: Sidewinder\n"
+                         "S: top-left cell; E: bottom-right cell (1x1: S only).\n";
             return 0;
         }
         if (argc != 5 && argc != 6) {
-            throw std::invalid_argument("Usage: maze_app <A|B|C> <width> <height> <seed> [output.txt]");
+            throw std::invalid_argument("Usage: maze_app <A|B|C|dfs|kruskal|sidewinder> <width> <height> <seed> [output.txt]");
         }
         const auto generate = generatorFor(argv[1]);
         const int width = parseSize(argv[2]);

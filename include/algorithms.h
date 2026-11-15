@@ -6,8 +6,8 @@
 
 using Generator = Maze (*)(int width, int height, std::uint32_t seed);
 
-Maze generateA(int width, int height, std::uint32_t seed);
-Maze generateB(int width, int height, std::uint32_t seed);
-Maze generateC(int width, int height, std::uint32_t seed);
+Maze generateA(int width, int height, std::uint32_t seed); // Randomized DFS
+Maze generateB(int width, int height, std::uint32_t seed); // Randomized Kruskal
+Maze generateC(int width, int height, std::uint32_t seed); // Sidewinder
 Generator generatorFor(std::string_view id);
 

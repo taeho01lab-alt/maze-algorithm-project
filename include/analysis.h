@@ -18,5 +18,5 @@ struct MazeMetrics {
 };
 
 ValidationResult validatePerfectMaze(const Maze& maze); // Member 2
-MazeMetrics analyzeMaze(const Maze& maze);              // Member 4
+MazeMetrics analyzeMaze(const Maze& maze);              // Comparison-results owner
 

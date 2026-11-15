@@ -2,9 +2,9 @@
 #include <stdexcept>
 
 Generator generatorFor(std::string_view id) {
-    if (id == "A") return generateA;
-    if (id == "B") return generateB;
-    if (id == "C") return generateC;
-    throw std::invalid_argument("Algorithm must be A, B or C");
+    if (id == "A" || id == "dfs") return generateA;
+    if (id == "B" || id == "kruskal") return generateB;
+    if (id == "C" || id == "sidewinder") return generateC;
+    throw std::invalid_argument("Algorithm must be A/dfs, B/kruskal or C/sidewinder");
 }
 

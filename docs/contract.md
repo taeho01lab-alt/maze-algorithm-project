@@ -16,7 +16,9 @@ Maze generateB(int width, int height, std::uint32_t seed);
 Maze generateC(int width, int height, std::uint32_t seed);
 ```
 
-새 호출마다 시드로 난수 생성기를 초기화합니다. 이전 실행의 전역 난수 상태를 이어 쓰지 않습니다. 알고리즘마다 생성되는 미로는 달라도 됩니다. 알고리즘 선택은 팀에서 결정하며 세 함수에 특정 방식을 미리 배정하지 않습니다.
+`generateA`는 Randomized DFS, `generateB`는 Randomized Kruskal, `generateC`는 Sidewinder입니다. CLI에서는 A/B/C 또는 dfs/kruskal/sidewinder를 선택합니다.
+
+새 호출마다 시드로 `std::mt19937`를 초기화합니다. 이전 실행의 전역 난수 상태를 이어 쓰지 않습니다. `src/generator_random.h`의 공통 범위 선택과 Kruskal의 명시적 셔플로 표준 라이브러리별 분포·셔플 구현에 의존하지 않습니다. 같은 알고리즘·크기·시드는 같은 미로를 생성합니다. 서로 다른 알고리즘끼리 미로가 같을 필요는 없으며, 서로 다른 시드가 항상 서로 다른 미로를 보장하지도 않습니다. 1×N·N×1 완전 미로는 가능한 구조가 하나입니다.
 
 ## 출력
 
