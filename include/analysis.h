@@ -13,10 +13,12 @@ struct ValidationResult {
 
 struct MazeMetrics {
     std::size_t deadEnds = 0;
-    std::size_t pathLength = 0; // Number of moves from S to E.
     double averageCorridorLength = 0.0;
+    std::size_t longestPathLength = 0; // Tree diameter, measured in moves.
 };
 
-ValidationResult validatePerfectMaze(const Maze& maze); // Member 2
-MazeMetrics analyzeMaze(const Maze& maze);              // Comparison-results owner
+// Malformed shape/walls throw invalid_argument; disconnected/cyclic graphs
+// produce flags. Analysis requires a perfect maze and rejects other graphs.
+ValidationResult validatePerfectMaze(const Maze& maze);
+MazeMetrics analyzeMaze(const Maze& maze);
 
