@@ -8,7 +8,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 add_library(maze_core
     src/maze.cpp src/io.cpp src/registry.cpp
     src/algorithm_a.cpp src/algorithm_b.cpp src/algorithm_c.cpp
-    src/validation.cpp src/analysis.cpp src/experiments.cpp)
+    src/validation.cpp src/analysis.cpp src/measurement.cpp)
 target_include_directories(maze_core PUBLIC include)
 if(MSVC)
     target_compile_options(maze_core PRIVATE /W4 /permissive- /utf-8)
@@ -27,6 +27,9 @@ if(BUILD_TESTING)
     add_executable(maze_generator_tests tests/test_generators.cpp)
     target_link_libraries(maze_generator_tests PRIVATE maze_core)
     add_test(NAME maze_generators COMMAND maze_generator_tests)
+    add_executable(maze_analysis_tests tests/test_analysis.cpp)
+    target_link_libraries(maze_analysis_tests PRIVATE maze_core)
+    add_test(NAME maze_analysis COMMAND maze_analysis_tests)
     add_test(NAME cli_generation COMMAND ${CMAKE_COMMAND}
         "-DAPP=$<TARGET_FILE:maze_app>"
         "-DTEST_DIR=${CMAKE_CURRENT_BINARY_DIR}/cli-test-output"
