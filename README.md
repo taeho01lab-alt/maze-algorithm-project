@@ -1,4 +1,4 @@
-# 미로 생성 및 Maze Analyzer - C++ 담당 코드
+# 미로 생성 및 Maze Analyzer
 
 이 폴더는 Randomized DFS, Randomized Kruskal, Sidewinder와 Maze Analyzer를 구현한 C++17 프로젝트입니다.
 
