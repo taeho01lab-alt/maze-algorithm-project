@@ -26,7 +26,7 @@ A=dfs, B=kruskal, C=sidewinder 별칭도 사용할 수 있습니다.
 
 측정값:
 - Dead ends: 열린 이웃이 하나인 칸 수.
-- Longest path: 임의의 두 칸 사이 최대 이동 횟수.
+- Longest path: 과제 기준 S에서 E까지의 이동 횟수. 완전 미로에는 두 끝점 사이 경로가 하나입니다.
 - Average straight corridor: 꺾임·갈림길·막다른 길에서 나눈 직선 구간의 평균 이동 횟수.
 - Generation time: 한 번의 생성 함수 호출 시간(ms). 검증·분석·출력·저장 제외.
 

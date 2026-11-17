@@ -1,6 +1,5 @@
 #include "analysis.h"
 #include "maze_graph.h"
-#include <algorithm>
 #include <stdexcept>
 
 MazeMetrics analyzeMaze(const Maze& maze) {
@@ -26,10 +25,9 @@ MazeMetrics analyzeMaze(const Maze& maze) {
     if (corridorCount != 0)
         result.averageCorridorLength = static_cast<double>(graph.edges) / corridorCount;
     const auto fromStart = maze_detail::distances(graph, 0);
-    const auto endpoint = static_cast<std::size_t>(
-        std::max_element(fromStart.begin(), fromStart.end()) - fromStart.begin());
-    const auto fromEndpoint = maze_detail::distances(graph, endpoint);
-    result.longestPathLength = *std::max_element(fromEndpoint.begin(), fromEndpoint.end());
+    // The assignment defines Longest Path as S to E. A perfect maze has one
+    // simple path between these fixed endpoints; E is the last logical cell.
+    result.longestPathLength = fromStart.back();
     return result;
 }
 

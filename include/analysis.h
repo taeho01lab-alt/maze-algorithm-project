@@ -14,7 +14,7 @@ struct ValidationResult {
 struct MazeMetrics {
     std::size_t deadEnds = 0;
     double averageCorridorLength = 0.0;
-    std::size_t longestPathLength = 0; // Tree diameter, measured in moves.
+    std::size_t longestPathLength = 0; // Unique S-to-E path, measured in moves.
 };
 
 // Malformed shape/walls throw invalid_argument; disconnected/cyclic graphs
