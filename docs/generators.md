@@ -69,13 +69,10 @@ produce the same maze, especially for one-row and one-column grids.
 `tests/test_generators.cpp` checks the outputs independently: matching walls,
 closed boundaries, connectivity by graph traversal, and exactly N-1 passages.
 It also checks repeated seeds, invalid dimensions, narrow and larger grids.
-These tests do not implement or replace the production `validatePerfectMaze`
-API; that module remains for the generation-results owner to complete.
-
-The comparison-results owner can call `generatorFor(id)` and invoke the
-returned function. Measure only the agreed generation interval. Render/save,
-validation, maze analysis and CSV writing belong outside that interval.
-Sample files are examples, not experimental performance measurements.
+The production validation API is implemented in `src/validation.cpp` using
+`src/maze_graph.h`. `src/measurement.cpp` times a single generator invocation
+and then invokes the Analyzer. Rendering, saving and analysis are outside
+the measured generation interval.
 
 ## References
 

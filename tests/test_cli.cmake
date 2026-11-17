@@ -16,6 +16,13 @@ expect_rejection(dfs 4 3 4294967296)
 expect_rejection(dfs 2147483648 3 42)
 expect_rejection(dfs 4x 3 42)
 expect_rejection(dfs 4 3 42 unused.txt extra)
+expect_rejection(--analyze)
+expect_rejection(--analyze dfs 4 3 -1)
+expect_rejection(--analyze unknown 4 3 42)
+expect_rejection(--compare)
+expect_rejection(--compare 4 3 42 0)
+expect_rejection(--compare 4 3 42 -1)
+expect_rejection(--compare 4 3 4294967296)
 
 file(MAKE_DIRECTORY "${TEST_DIR}")
 foreach(pair IN ITEMS "A,dfs" "B,kruskal" "C,sidewinder")
@@ -59,4 +66,36 @@ foreach(pair IN ITEMS "A,dfs" "B,kruskal" "C,sidewinder")
         message(FATAL_ERROR "Output error was not reported: ${full_name}")
     endif()
 endforeach()
-message(STATUS "CLI validation, algorithm aliases, rendering and file output checks passed")
+
+execute_process(COMMAND "${APP}" --analyze dfs 1 5 42 "${TEST_DIR}/analyzed.txt"
+                RESULT_VARIABLE status OUTPUT_VARIABLE output ERROR_VARIABLE error)
+if(NOT "${status}" STREQUAL "0" OR NOT error STREQUAL "" OR
+   NOT output MATCHES "Dead ends: 2" OR NOT output MATCHES "Longest path \\(moves\\): 4" OR
+   NOT output MATCHES "Average straight corridor \\(moves\\): 4.000000" OR
+   NOT output MATCHES "Generation time \\(ms\\): [0-9]+\\.[0-9]+" OR
+   NOT output MATCHES "Perfect maze: yes")
+    message(FATAL_ERROR "Analyzer output incorrect: ${output} ${error}")
+endif()
+file(READ "${TEST_DIR}/analyzed.txt" saved)
+if(NOT saved MATCHES "#S#" OR NOT saved MATCHES "#E#")
+    message(FATAL_ERROR "Analyze command did not save maze")
+endif()
+# Removed workflows must not remain exposed by the executable.
+expect_rejection(--compare 4 3 42)
+execute_process(COMMAND "${APP}" --help
+                RESULT_VARIABLE status OUTPUT_VARIABLE output ERROR_VARIABLE error)
+if(NOT "${status}" STREQUAL "0" OR output MATCHES "--compare|output.csv|repeats")
+    message(FATAL_ERROR "Help exposes workflows outside the C++ role")
+endif()
+foreach(name IN ITEMS dfs kruskal sidewinder)
+    execute_process(COMMAND "${APP}" --analyze "${name}" 1 1 42
+                    RESULT_VARIABLE status OUTPUT_VARIABLE output ERROR_VARIABLE error)
+    if(NOT "${status}" STREQUAL "0" OR NOT error STREQUAL "" OR
+       NOT output MATCHES "Dead ends: 0" OR
+       NOT output MATCHES "Longest path \\(moves\\): 0" OR
+       NOT output MATCHES "Average straight corridor \\(moves\\): 0.000000" OR
+       output MATCHES "S-to-E|Straight corridor count")
+        message(FATAL_ERROR "1x1 analyzer metrics incorrect: ${name} ${output} ${error}")
+    endif()
+endforeach()
+message(STATUS "CLI input, aliases, maze output and four analyzer measurements passed")
